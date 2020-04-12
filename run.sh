@@ -29,7 +29,7 @@ docker_gpu()
     docker run \
         -it \
         --rm \
-        --gpus all \
+        --gpus $gpu_conf \
         --init \
         --volume=${HOME}:/home/:rw \
         --publish 5252:22 \
