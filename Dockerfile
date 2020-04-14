@@ -66,14 +66,23 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     rm ~/miniconda.sh && \
     export PATH=~/miniconda/bin:$PATH 
 
-COPY ./conda*.yml ./
+WORKDIR /root/
 
-RUN /bin/bash -c "source /root/.bashrc && \
+COPY ./python_configs/* ./
+
+RUN pip install --upgrade pip && pip install --upgrade -r requirements.txt
+
+ARG INSTALL_ANACONDA
+RUN if $INSTALL_ANACONDA; then \
+    /bin/bash -c "source /root/.bashrc && \
                   export PATH=~/miniconda/bin:$PATH && \
                   conda init && \
                   source /root/.bashrc && \
                   conda env create -f conda-cpu.yml && \
-                  conda env create -f conda-gpu.yml"
+                  conda env create -f conda-gpu.yml && \
+                  conda activate cpu";\
+    fi
+
 
 
 RUN apt-get update && apt-get install -y openssh-server
