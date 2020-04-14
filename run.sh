@@ -124,4 +124,14 @@ main() {
     fi
 }
 
+check_if_docker_exists(){
+    head="=========================="
+    docker_desktop="1) If you are on Linux or Mac desktop go to https://www.docker.com/products/docker-desktop"
+    docker_sh="2) On bash environment you can run bash install_docker.sh to install docker"
+    abort_msg="Required docker but it's not installed.  Aborting."
+    command -v foo >/dev/null 2>&1 || \
+    { echo -e >&2 "$head\n$abort_msg\nTo install docker:\n$docker_desktop\n$docker_sh\n$head"; exit 1; }
+}
+
+check_if_docker_exists
 main $*

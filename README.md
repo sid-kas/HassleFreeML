@@ -2,6 +2,8 @@
 
 ### Quick start guide
 - Make sure you have docker installed
+    - If you are on Linux or Mac desktop go to https://www.docker.com/products/docker-desktop
+    - On bash environment you can run ```bash install_docker.sh``` to install docker
 
 - Initial build and run
 ```bash
