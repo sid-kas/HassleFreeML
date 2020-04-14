@@ -14,15 +14,28 @@ run_build_dockerfile()
 
 clean_docker_stuff()
 {
-    docker stop $container_name
-    docker rm $container_name
+    remove_container
     docker image rm sidkas/simply_ssh:latest
+}
+
+remove_container(){
+    docker stop $container_name
+    docker rm --force $container_name
 }
 
 docker_cpu() 
 {
     # docker
-    docker stop $container_name
+    if remove_container; then
+        echo "Successfully removed latest container \nStarting docker now..."
+    else
+        echo -e "No running container found! \nStarting docker now..."
+    fi
+    sleep 3
+    head="=========================="
+    echo -e "$head\nDocker running successfully now, to login use \ncmd: ssh $user@$ip -p $port \npass: $ssh_pass"
+    echo -e "Mounted Directory: $mnt_path \nJupyter port : $jupyter_port"
+
     docker run \
         -it \
         --rm \
@@ -32,11 +45,22 @@ docker_cpu()
         --publish $jupyter_port:8888 \
         --name $container_name \
         sidkas/simply_ssh:latest
+    
 }
    
 docker_gpu() 
 {
-    docker stop $container_name
+     # docker
+    if remove_container; then
+        echo "Successfully removed latest container \nStarting docker now..."
+    else
+        echo -e "No running container found! \nStarting docker now..."
+    fi
+    sleep 3
+    head="=========================="
+    echo -e "$head\nDocker running successfully now, to login use \ncmd: ssh $user@$ip -p $port \npass: $ssh_pass"
+    echo -e "Mounted Directory: $mnt_path \nJupyter port : $jupyter_port"
+    
     docker run \
         -it \
         --rm \
