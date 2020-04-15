@@ -1,5 +1,5 @@
 # HassleFreeMLDevelopemnt
-
+  
 ### Quick start guide
 - Make sure you have docker installed
     - If you are on **Windows or Mac** desktop go to https://www.docker.com/products/docker-desktop
@@ -34,7 +34,7 @@
     - mount directory can be changed in **config.sh** file, using mnt_path
 
 
-### Configureations for docker file
+### Configurations (from config.sh) for docker file and run.sh
 
 | **Argument**     | **Type** | **Default** |
 |------------------|----------|-------------|
@@ -46,6 +46,7 @@
 | jupyter_port     | int      | 8987        |
 | mnt_path         | str/bash | ${PWD}      |
 
-### To do
+### To do list
+
 - check gpu config and verify gpu compatibility
 - Login without password
