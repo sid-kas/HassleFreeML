@@ -1,7 +1,15 @@
 # /bin/bash 
 
-source ./.config
+source ./config.sh
 
+run_function() {
+    echo "Excecuting function $1"
+    if $1; then
+        echo "Successfully excecuted! $1"
+    else
+        echo "Failed to excecuting!! $1"
+    fi
+}
 
 run_build_dockerfile() 
 {
@@ -23,22 +31,26 @@ remove_container(){
     docker rm --force $container_name
 }
 
-docker_cpu() 
-{
+docker_init_run() {
     # docker
     if remove_container; then
         echo "Successfully removed latest container \nStarting docker now..."
     else
         echo -e "No running container found! \nStarting docker now..."
     fi
-    sleep 3
+    sleep 1
     head="=========================="
-    echo -e "$head\nDocker running successfully now, to login use \ncmd: ssh $user@$ip -p $port \npass: $ssh_pass"
+    echo -e "$head\nDocker running successfully now, to login use \ncmd: ssh $user@$ip -p $ssh_port \npass: $ssh_pass"
     echo -e "Mounted Directory: $mnt_path \nJupyter port : $jupyter_port"
+}
+
+docker_cpu() 
+{
+    docker_init_run
 
     docker run \
         -it \
-        --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
         --init \
         --volume=$mnt_path:/home/:rw \
         --publish $ssh_port:22 \
@@ -50,19 +62,11 @@ docker_cpu()
    
 docker_gpu() 
 {
-     # docker
-    if remove_container; then
-        echo "Successfully removed latest container \nStarting docker now..."
-    else
-        echo -e "No running container found! \nStarting docker now..."
-    fi
-    sleep 3
-    head="=========================="
-    echo -e "$head\nDocker running successfully now, to login use \ncmd: ssh $user@$ip -p $port \npass: $ssh_pass"
-    echo -e "Mounted Directory: $mnt_path \nJupyter port : $jupyter_port"
+    docker_init_run
     
     docker run \
         -it \
+        -v /var/run/docker.sock:/var/run/docker.sock \
         --rm \
         --gpus $gpu_conf \
         --init \
@@ -74,22 +78,14 @@ docker_gpu()
 
 }
 
-run_function() {
-    echo "Excecuting function $1"
-    if $1; then
-        echo "Successfully excecuted! $1"
-    else
-        echo "Failed to excecuting!! $1"
-    fi
-}
-
 print_help_msg(){
     head="=========================="
-    clean="--clean: stop and remove container, remove image"
-    cpu="--cpu : to set cpu env"
-    gpu="--gpu : to set gpu env"
+    clean="--clean : stop and remove container, remove image"
+    cpu="--cpu : to set cpu env and run"
+    gpu="--gpu : to set gpu env and run"
     build="--build : to build the dockerfile"
-    echo -e "$head\nOptions:\n$build\n$cpu\n$gpu\n$clean\n$head\n"
+    _help="--help or -h : to see this message"
+    echo -e "$head\nOptions:\n$build\n$cpu\n$gpu\n$clean\n$_help\n$head\n"
 }
 
 main() {

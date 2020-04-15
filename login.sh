@@ -7,6 +7,6 @@
 # set -e
 # apt-get install sshpass
 
-source ./.config
-ssh-keygen -f "/root/.ssh/known_hosts" -R "[$ip]:$port"
-sshpass -p $ssh_pass ssh -p $port -o StrictHostKeyChecking=no $user@$ip 
+source ./config.sh
+ssh-keygen -f "/root/.ssh/known_hosts" -R "[$ip]:$ssh_port"
+sshpass -p $ssh_pass ssh -p $ssh_port -o StrictHostKeyChecking=no $user@$ip 

@@ -61,11 +61,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     htop \
     apt-transport-https
 
-RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
-    bash ~/miniconda.sh -b -p ~/miniconda && \
-    rm ~/miniconda.sh && \
-    export PATH=~/miniconda/bin:$PATH 
-
 WORKDIR /root/
 
 COPY ./python_configs/* ./
@@ -73,6 +68,14 @@ COPY ./python_configs/* ./
 RUN pip install --upgrade pip && pip install --upgrade -r requirements.txt
 
 ARG INSTALL_ANACONDA
+
+RUN if $INSTALL_ANACONDA; then \
+    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+    bash ~/miniconda.sh -b -p ~/miniconda && \
+    rm ~/miniconda.sh && \
+    export PATH=~/miniconda/bin:$PATH; \
+    fi
+
 RUN if $INSTALL_ANACONDA; then \
     /bin/bash -c "source /root/.bashrc && \
                   export PATH=~/miniconda/bin:$PATH && \
@@ -83,7 +86,7 @@ RUN if $INSTALL_ANACONDA; then \
                   conda activate cpu";\
     fi
 
-
+RUN curl -sSL https://get.docker.com | sh
 
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
