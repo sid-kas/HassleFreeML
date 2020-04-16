@@ -7,7 +7,7 @@
 
 - Initial build and run
 ```bash
-    bash run.sh --build --cpu
+    bash run.sh --build --cpu /path/to/dir
 ```
 - already built
 ```bash
@@ -17,6 +17,19 @@
 ```bash
     bash run.sh --gpu
 ```
+
+==========================
+Default:
+bash run.sh 
+Options:
+/path/to/dir : specifies nount path, default is set to pwd 
+--build : to build the dockerfile
+--cpu : to set cpu env and run
+--gpu : to set gpu env and run
+--clean : stop and remove container, remove image
+--help or -h : to see this message
+==========================
+
 - Change any configs using **config.sh** file, it works as simple bash file to export env variables.
 
 - Use login.sh from another terminal to ssh into the container (needs sshpass and ssh-keygen).
@@ -33,6 +46,7 @@
     - mounted current working directory to */home/* 
     - mount directory can be changed in **config.sh** file, using mnt_path
 
+- copy/upload files: scp -P $ssh_port -r /path/to/dir user@ip:~/remote_dir
 
 ### Configurations (from config.sh) for docker file and run.sh
 

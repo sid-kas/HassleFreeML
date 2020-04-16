@@ -63,9 +63,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 WORKDIR /root/
 
-COPY ./python_configs/* ./
+COPY ./configs/* ./configs/
 
-RUN pip install --upgrade pip && pip install --upgrade -r requirements.txt
+RUN pip install --upgrade pip && pip install --upgrade -r configs/requirements.txt
 
 ARG INSTALL_ANACONDA
 
@@ -81,8 +81,8 @@ RUN if $INSTALL_ANACONDA; then \
                   export PATH=~/miniconda/bin:$PATH && \
                   conda init && \
                   source /root/.bashrc && \
-                  conda env create -f conda-cpu.yml && \
-                  conda env create -f conda-gpu.yml && \
+                  conda env create -f configs/conda-cpu.yml && \
+                  conda env create -f configs/conda-gpu.yml && \
                   conda activate cpu";\
     fi
 

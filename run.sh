@@ -1,6 +1,6 @@
 # /bin/bash 
 
-source ./config.sh
+source ./configs/config.sh
 
 run_function() {
     echo "Excecuting function $1"
@@ -52,7 +52,7 @@ docker_cpu()
         -it \
         -v /var/run/docker.sock:/var/run/docker.sock \
         --init \
-        --volume=$mnt_path:/home/:rw \
+        --volume=$mnt_path:/root/mount/:rw \
         --publish $ssh_port:22 \
         --publish $jupyter_port:8888 \
         --name $container_name \
@@ -70,7 +70,7 @@ docker_gpu()
         --rm \
         --gpus $gpu_conf \
         --init \
-        --volume=$mnt_path:/home/:rw \
+        --volume=$mnt_path:/root/mount/:rw \
         --publish $ssh_port:22 \
         --publish $jupyter_port:8888 \
         --name $container_name \
@@ -94,6 +94,7 @@ main() {
     help_msg=false
     clean_up=false
     use_cpu=false
+
     for var in "$@" 
     do 
         if [[ "$var" == *"--cpu"* ]]; then
@@ -104,6 +105,9 @@ main() {
         fi
         if [[ "$var" == *"--gpu"* ]]; then
             use_gpu=true
+        fi
+        if [ -d "$var" ]; then
+            mnt_path=$(cd -- "$var" && pwd)
         fi
         if [[ "$var" == *"--build"* ]]; then
             build_dockerfile=true

@@ -12,3 +12,6 @@ ipython
 jupyter
 jupyterlab
 
+tensorflow==1.15
+bert-serving-server
+bert-serving-client
