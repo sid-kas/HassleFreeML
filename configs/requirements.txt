@@ -12,6 +12,6 @@ ipython
 jupyter
 jupyterlab
 
-tensorflow==1.15
+tensorflow==1.15.2
 bert-serving-server
 bert-serving-client
