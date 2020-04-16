@@ -18,35 +18,41 @@
     bash run.sh --gpu
 ```
 
-==========================
-Default:
-bash run.sh 
-Options:
-/path/to/dir : specifies nount path, default is set to pwd 
---build : to build the dockerfile
---cpu : to set cpu env and run
---gpu : to set gpu env and run
---clean : stop and remove container, remove image
---help or -h : to see this message
-==========================
 
-- Change any configs using **config.sh** file, it works as simple bash file to export env variables.
+**Simple run.sh options**:
+- bash run.sh --help
+- bash run.sh --build --cpu ./
+- bash run.sh --build --gpu ./
+- bash run.sh -gpu ./
+- bash run.sh --clean
+
+**Options**:
+- */path/to/dir *: specifies nount path, default is set to pwd 
+- *--build* : to build the dockerfile
+- *--cpu* : to set cpu env and run
+- *--gpu *: to set gpu env and run
+- *--clean* : stop and remove container, remove image
+- *--help or -h* : to see this message
+
+
+- Change any configs using **configs/config.sh** file, it works as simple bash file to export env variables.
 
 - Use login.sh from another terminal to ssh into the container (needs sshpass and ssh-keygen).
 ```bash
     bash login.sh
 ```
-- Manual login (derived from **config.sh** file)
+- Manual login (derived from **configs/config.sh** file)
 ```bash
     cmd: ssh root@localhost -p 5252
     pass: busy_box
 ```
-- Once logged in
-    - Run jupyter lab using ```bash run_jupyterlab.sh &```, access it using jupyter_port (in config.sh) external port
-    - mounted current working directory to */home/* 
-    - mount directory can be changed in **config.sh** file, using mnt_path
+**Once logged in**
 
-- copy/upload files: scp -P $ssh_port -r /path/to/dir user@ip:~/remote_dir
+- Run jupyter lab using ```bash configs/run_jupyterlab.sh &```, access it using jupyter_port (in configs/config.sh) external port
+
+- mounted current working directory to *~/mount/* 
+
+- **Copy/upload files:** scp -P $ssh_port -r /path/to/dir user@ip:~/remote_dir
 
 ### Configurations (from config.sh) for docker file and run.sh
 
