@@ -59,6 +59,13 @@
 
 - **Copy/upload files:** scp -P $ssh_port -r /path/to/dir user@ip:~/remote_dir
 
+### Remote SSH to docker container via VSCode
+- Install **Remmote - SSH** extansion in vscode
+<h4 align="center">Demo</h4>
+<p align="center">
+    <img src=".content/remote_ssh_vscode.gif?raw=true" width="700">
+</p>
+
 ### Configurations (from config.sh) for docker file and run.sh
 
 | **Argument**     | **Type** | **Default** |
