@@ -2,9 +2,7 @@
 
 <h4 align="center">Demo</h4>
 <p align="center">
-    <video width="320" height="240" controls>
-        <source src=".github/demo.mov" type="video/mov">
-    </video>
+    <img src=".content/demo.gif?raw=true" width="700">
 </p>
 
 ### Quick start guide
