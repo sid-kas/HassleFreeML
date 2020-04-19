@@ -1,5 +1,10 @@
 # HassleFreeMLDevelopemnt
-  
+
+<h4 align="center">Demo</h4>
+<p align="center">
+    <img src=".github/demo.gif?raw=true" width="700">
+</p>
+
 ### Quick start guide
 - Make sure you have docker installed
     - If you are on **Windows or Mac** desktop go to https://www.docker.com/products/docker-desktop
