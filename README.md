@@ -1,5 +1,7 @@
 # HassleFreeMLDevelopemnt
 
+### Read descriptive article on this repo [here](https://medium.com/@siddhartha.kasaraneni/automate-machine-learning-environment-setup-in-3-steps-docker-conda-vscode-cpu-gpus-18e8cfe012b2)
+
 Scrpits to automatically setup Machine Learning Environment.
 
 Any one who's starting with setting up python environment knows how messed up the file system can become if we happen to a small mistake while installation. These scripts help you who are don't want make a mess.
