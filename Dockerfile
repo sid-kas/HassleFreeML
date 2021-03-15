@@ -9,8 +9,11 @@ RUN apt-get update && apt-get install -y \
         sudo \
         git \
         && \
+    apt-get install -y sudo curl wget locales && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN locale-gen sv_SE.UTF-8
 
 # install dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -88,6 +91,8 @@ RUN if $INSTALL_ANACONDA; then \
 
 RUN curl -sSL https://get.docker.com | sh
 
+# RUN apt-get install language-pack-sv
+
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 
@@ -104,6 +109,13 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
+
+# COPY ./default_locale /etc/default/locale
+# RUN chmod 0755 /etc/default/locale
+
+ENV LC_ALL=sv_SE.UTF-8
+ENV LANG=sv_SE.UTF-8
+ENV LANGUAGE=sv_SE.UTF-8
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
